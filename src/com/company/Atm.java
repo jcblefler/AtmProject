@@ -1,10 +1,12 @@
 package com.company;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Atm {
     Scanner scanner = new Scanner(System.in);
+    private static DecimalFormat df2 = new DecimalFormat("#.00");
 
     private boolean account = false;
     private ArrayList<Account> users = new ArrayList<>();
@@ -81,14 +83,14 @@ public class Atm {
          if (userInput.equalsIgnoreCase("withdraw")){
              System.out.println("How much are you withdrawing.");
              double withdrawAmount = scanner.nextDouble();
-             System.out.println( users.get(accountLocation).getBalance() - withdrawAmount);
+             System.out.println( df2.format(users.get(accountLocation).getBalance() - withdrawAmount));
 
          } else if (userInput.equalsIgnoreCase("deposit")){
              System.out.println("How much are you depositing.");
              double depositAmount = scanner.nextDouble();
-             System.out.println(users.get(accountLocation).getBalance() + depositAmount);
+             System.out.println(df2.format(users.get(accountLocation).getBalance() + depositAmount));
          } else if (userInput.equalsIgnoreCase("check")){
-             System.out.println("Your balance is: " + users.get(accountLocation).getBalance());
+             System.out.println("Your balance is: " + df2.format(users.get(accountLocation).getBalance()));
          }
          return " " + users.get(accountLocation).getBalance();
      }
