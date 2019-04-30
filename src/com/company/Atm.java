@@ -22,7 +22,6 @@ public class Atm {
     public Atm() {
     }
 
-
     public boolean accountCheck(){
         System.out.println("Do you have an account. (y/n)");
         String answer = scanner.next();
@@ -40,7 +39,7 @@ public class Atm {
         return true;
     }
 
-    public String login(){
+    public void login(){
 
 
 
@@ -57,6 +56,7 @@ public class Atm {
                 if (userInputAccount == users.get(i).getAccountNum() && userInputPin == users.get(i).getPin()) {
                     accountLocation = i;
                     loginSuccessful = true;
+                    System.out.println("Welcome, " + users.get(accountLocation).getUserName() + ".");
                     break loop;
                 }
             }
@@ -70,12 +70,10 @@ public class Atm {
             transaction();
         }
 
-
-        return "daf";
      }
 
 
-     public String transaction(){
+     public boolean transaction(){
 
          System.out.println("Would you like to make a withdraw, deposit, or check balance.");
          String userInput = scanner.next();
@@ -83,16 +81,24 @@ public class Atm {
          if (userInput.equalsIgnoreCase("withdraw")){
              System.out.println("How much are you withdrawing.");
              double withdrawAmount = scanner.nextDouble();
-             System.out.println( df2.format(users.get(accountLocation).getBalance() - withdrawAmount));
-
+             System.out.println("Your balance is now $" + df2.format(users.get(accountLocation).getBalance() - withdrawAmount));
+             users.get(accountLocation).setBalance(users.get(accountLocation).getBalance() - withdrawAmount);
          } else if (userInput.equalsIgnoreCase("deposit")){
              System.out.println("How much are you depositing.");
              double depositAmount = scanner.nextDouble();
-             System.out.println(df2.format(users.get(accountLocation).getBalance() + depositAmount));
+             System.out.println("Your balance is now $" + df2.format(users.get(accountLocation).getBalance() + depositAmount));
+             users.get(accountLocation).setBalance(users.get(accountLocation).getBalance() + depositAmount);
          } else if (userInput.equalsIgnoreCase("check")){
-             System.out.println("Your balance is: " + df2.format(users.get(accountLocation).getBalance()));
+             System.out.println("Your balance is: $" + df2.format(users.get(accountLocation).getBalance()));
          }
-         return " " + users.get(accountLocation).getBalance();
+         System.out.println("Would you like to make another transaction. (y/n)");
+         String userAnswer = scanner.next();
+         if (userAnswer.equalsIgnoreCase("y")){
+             transaction();
+         } else{
+             System.out.println("Have a nice day, " + users.get(accountLocation).getUserName() + ".\n\n");
+         }
+         return accountCheck();
      }
 
 
